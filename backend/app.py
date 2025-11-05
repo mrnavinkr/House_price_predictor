@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Load model safely using absolute path
+# Load model safely (same folder me model.pkl)
 BASE_DIR = os.path.dirname(__file__)
 model_path = os.path.join(BASE_DIR, "model.pkl")
 
@@ -39,4 +39,6 @@ def predict():
         return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Cloud-friendly run
+    port = int(os.environ.get("PORT", 5000))  # Cloud provides PORT
+    app.run(host='0.0.0.0', port=port)
