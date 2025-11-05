@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Load model safely (same folder me model.pkl)
+# ✅ Load model safely (ensure model.pkl is in same folder)
 BASE_DIR = os.path.dirname(__file__)
 model_path = os.path.join(BASE_DIR, "model.pkl")
 
@@ -16,7 +16,7 @@ with open(model_path, "rb") as f:
 
 @app.route("/")
 def home():
-    return "🏠 Flask Backend Running!"
+    return "🏠 Flask Backend Running Successfully!"
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -35,10 +35,11 @@ def predict():
 
         prediction = model.predict(values)[0]
         return jsonify({"prediction": round(prediction, 2)})
+
     except Exception as e:
         return jsonify({"error": str(e)})
 
 if __name__ == "__main__":
-    # Cloud-friendly run
-    port = int(os.environ.get("PORT", 5000))  # Cloud provides PORT
-    app.run(host='0.0.0.0', port=port)
+    # ✅ Cloud-friendly port handling (fixes “Address already in use” issue)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port)
