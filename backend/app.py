@@ -41,5 +41,7 @@ def predict():
 
 if __name__ == "__main__":
     # ✅ Cloud-friendly port handling (fixes “Address already in use” issue)
-    port = int(os.environ.get("PORT", 5001))
-    app.run(host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 0))
+    app.run(host="0.0.0.0", port=port,debug=False)
+    
+
